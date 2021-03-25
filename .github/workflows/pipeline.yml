@@ -1,0 +1,22 @@
+name: pipeline
+on: push
+env:
+ name: pythonproject
+jobs:
+ Test:
+   name:  test Job
+   runs-on: ubuntu-latest
+   steps:
+    - uses: actions/checkout@v2
+    - run: python hello.py  
+ Build:
+   needs: [Test]
+   name: build Job
+   runs-on: ubuntu-latest
+   steps:
+    - uses: actions/checkout@v2
+    - name: artifact upload to repo
+      uses: actions/upload-artifact@v2
+      with: 
+       name: ${{ env.name }}
+       path: .
